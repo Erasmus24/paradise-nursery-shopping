@@ -36,15 +36,25 @@ const Navbar = styled.nav`
 const Jumbotron = styled.div`
   background: url('https://images.unsplash.com/photo-1493673272479-a20888bcee10?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTJ8fHBsYW50c3xlbnwwfHwwfHx8MA%3D%3D') center/cover no-repeat;
   color: white;
-  text-align: center;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   height: calc(100vh - 60px);
-  font-size: 2rem;
-  font-weight: bold;
+  padding: 2rem;
   margin-top: 60px;
+`;
+
+const JumbotronTitle = styled.h1`
+  width: 50%;
+  text-align: left;
+  font-size: 3rem;
+  font-weight: bold;
+`;
+
+const JumbotronText = styled.p`
+  width: 50%;
+  text-align: right;
+  font-size: 1.5rem;
 `;
 
 const Title = styled.h1`
@@ -108,8 +118,8 @@ function App() {
             </NavLinks>
           </Navbar>
           <Jumbotron>
-            <h1>Paradise Nursery Shopping</h1>
-            <p>Your one-stop shop for all plant and nursery needs!</p>
+            <JumbotronTitle>Paradise Nursery Shopping</JumbotronTitle>
+            <JumbotronText>Your one-stop shop for all plant and nursery needs! Explore our vast collection of beautiful plants, gardening tools, and expert tips to nurture your green haven.</JumbotronText>
           </Jumbotron>
           <MainContent>
             <Suspense fallback={<p className="text-center text-gray-500">Loading...</p>}>
