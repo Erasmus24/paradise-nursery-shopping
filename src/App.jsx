@@ -34,7 +34,7 @@ const Navbar = styled.nav`
 `;
 
 const Jumbotron = styled.div`
-  background: url('/path-to-image.jpg') center/cover no-repeat;
+  background: url('https://images.unsplash.com/photo-1493673272479-a20888bcee10?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTJ8fHBsYW50c3xlbnwwfHwwfHx8MA%3D%3D') center/cover no-repeat;
   color: white;
   text-align: center;
   display: flex;
