@@ -20,7 +20,6 @@ const SearchInput = styled.input`
   transition: all 0.3s ease-in-out;
   background-color: #eceff1;
   margin-top: 2rem;
-  
   &:focus {
     outline: none;
     border-color: #28a745;
@@ -107,7 +106,7 @@ const ProductList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [bouncingProductId, setBouncingProductId] = useState(null);
-  const [searchTerm, setSearchTerm] = useState(""); 
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -142,7 +141,7 @@ const ProductList = () => {
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
     setBouncingProductId(product.id);
-    setTimeout(() => setBouncingProductId(null), 600); 
+    setTimeout(() => setBouncingProductId(null), 600);
   };
 
   if (loading) return <p>Loading products...</p>;
@@ -165,7 +164,7 @@ const ProductList = () => {
             <AddToCartButton
               className={bouncingProductId === product.id ? "bounce" : ""}
               onClick={(e) => {
-                e.stopPropagation(); 
+                e.stopPropagation();
                 handleAddToCart(product);
               }}
             >

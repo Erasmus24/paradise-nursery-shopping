@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from "react
 import { lazy, Suspense, useEffect, useState } from "react";
 import styled from "styled-components";
 import GlobalStyle from "./styles/GlobalStyle";
+import { FaShoppingCart } from "react-icons/fa";
 
 const ProductList = lazy(() => import("./components/ProductList"));
 const Cart = lazy(() => import("./components/Cart"));
@@ -53,7 +54,7 @@ const JumbotronTitle = styled.h1`
 
 const JumbotronText = styled.p`
   width: 50%;
-  text-align: right;
+  text-align: center;
   font-size: 1.5rem;
 `;
 
@@ -111,22 +112,29 @@ function App() {
       <Router>
         <Container>
           <Navbar style={{ top: visible ? "0" : "-50px" }}>
-            <StyledLink to='/'><Title>Paradise Nursery Shopping</Title></StyledLink> 
+            <StyledLink to='/'><Title>Paradise Nursery Shopping</Title></StyledLink>
             <NavLinks>
               <StyledLink to="/">Home</StyledLink>
-              <StyledLink to="/cart">Cart</StyledLink>
+              <StyledLink to="/cart">
+                <FaShoppingCart size={24} />
+              </StyledLink>
             </NavLinks>
           </Navbar>
           <Jumbotron>
             <JumbotronTitle>Paradise Nursery Shopping</JumbotronTitle>
-            <JumbotronText>Your one-stop shop for all plant and nursery needs! Explore our vast collection of beautiful plants, gardening tools, and expert tips to nurture your green haven.</JumbotronText>
+            <JumbotronText>Discover a lush variety of plants, flowers, and gardening essentials
+               at Paradise Nursery Shopping. Whether you're a seasoned gardener or just starting out,
+                we have everything you need to create a beautiful, thriving green space.
+                From indoor houseplants to outdoor landscaping solutions, our collection
+                is carefully curated to bring nature closer to you. Shop with confidence
+                 and transform your home or garden into a true paradise today!</JumbotronText>
           </Jumbotron>
           <MainContent>
             <Suspense fallback={<p className="text-center text-gray-500">Loading...</p>}>
               <Routes>
                 <Route path="/" element={<ProductList />} />
                 <Route path="/cart" element={<Cart />} />
-                <Route path="/product/:id" element={<ProductDetail />} /> 
+                <Route path="/product/:id" element={<ProductDetail />} />
               </Routes>
             </Suspense>
           </MainContent>
