@@ -1,5 +1,5 @@
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from "react-router-dom";
-import { lazy, Suspense, useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { lazy, Suspense, useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import GlobalStyle from "./styles/GlobalStyle";
 import { FaShoppingCart } from "react-icons/fa";
@@ -58,6 +58,25 @@ const JumbotronText = styled.p`
   font-size: 1.5rem;
 `;
 
+const GetStartedButton = styled.button`
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1.2rem;
+  color: white;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  transition: background 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #388e3c;
+  }
+`;
+
 const Title = styled.h1`
   color: #fff;
   font-size: 1.5rem;
@@ -94,6 +113,7 @@ const Footer = styled.footer`
 function App() {
   const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
   const [visible, setVisible] = useState(true);
+  const productListRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -105,6 +125,10 @@ function App() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [prevScrollPos]);
+
+  const scrollToProducts = () => {
+    productListRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <>
@@ -121,15 +145,20 @@ function App() {
             </NavLinks>
           </Navbar>
           <Jumbotron>
-            <JumbotronTitle>Paradise Nursery Shopping</JumbotronTitle>
-            <JumbotronText>Discover a lush variety of plants, flowers, and gardening essentials
-               at Paradise Nursery Shopping. Whether you're a seasoned gardener or just starting out,
-                we have everything you need to create a beautiful, thriving green space.
-                From indoor houseplants to outdoor landscaping solutions, our collection
-                is carefully curated to bring nature closer to you. Shop with confidence
-                 and transform your home or garden into a true paradise today!</JumbotronText>
+            <div style={{ width: "50%", textAlign: "left" }}>
+              <JumbotronTitle>Paradise Nursery Shopping</JumbotronTitle>
+              <GetStartedButton onClick={scrollToProducts}>Get Started</GetStartedButton>
+            </div>
+            <JumbotronText>
+              Discover a lush variety of plants, flowers, and gardening essentials
+              at Paradise Nursery Shopping. Whether you're a seasoned gardener or just starting out,
+              we have everything you need to create a beautiful, thriving green space.
+              From indoor houseplants to outdoor landscaping solutions, our collection
+              is carefully curated to bring nature closer to you. Shop with confidence
+              and transform your home or garden into a true paradise today!
+            </JumbotronText>
           </Jumbotron>
-          <MainContent>
+          <MainContent ref={productListRef}>
             <Suspense fallback={<p className="text-center text-gray-500">Loading...</p>}>
               <Routes>
                 <Route path="/" element={<ProductList />} />
