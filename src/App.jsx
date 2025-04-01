@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import { lazy, Suspense, useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import GlobalStyle from "./styles/GlobalStyle";
@@ -111,9 +111,18 @@ const Footer = styled.footer`
 `;
 
 function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
+  );
+}
+
+function AppContent() {
   const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
   const [visible, setVisible] = useState(true);
   const productListRef = useRef(null);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -131,46 +140,44 @@ function App() {
   };
 
   return (
-    <>
+    <Container>
       <GlobalStyle />
-      <Router>
-        <Container>
-          <Navbar style={{ top: visible ? "0" : "-50px" }}>
-            <StyledLink to='/'><Title>Paradise Nursery Shopping</Title></StyledLink>
-            <NavLinks>
-              <StyledLink to="/">Home</StyledLink>
-              <StyledLink to="/cart">
-                <FaShoppingCart size={24} />
-              </StyledLink>
-            </NavLinks>
-          </Navbar>
-          <Jumbotron>
-            <div style={{ width: "50%", textAlign: "left" }}>
-              <JumbotronTitle>Paradise Nursery Shopping</JumbotronTitle>
-              <GetStartedButton onClick={scrollToProducts}>Get Started</GetStartedButton>
-            </div>
-            <JumbotronText>
-              Discover a lush variety of plants, flowers, and gardening essentials
-              at Paradise Nursery Shopping. Whether you're a seasoned gardener or just starting out,
-              we have everything you need to create a beautiful, thriving green space.
-              From indoor houseplants to outdoor landscaping solutions, our collection
-              is carefully curated to bring nature closer to you. Shop with confidence
-              and transform your home or garden into a true paradise today!
-            </JumbotronText>
-          </Jumbotron>
-          <MainContent ref={productListRef}>
-            <Suspense fallback={<p className="text-center text-gray-500">Loading...</p>}>
-              <Routes>
-                <Route path="/" element={<ProductList />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/product/:id" element={<ProductDetail />} />
-              </Routes>
-            </Suspense>
-          </MainContent>
-          <Footer>© {new Date().getFullYear()} Paradise Nursery Shopping. All rights reserved.</Footer>
-        </Container>
-      </Router>
-    </>
+      <Navbar style={{ top: visible ? "0" : "-50px" }}>
+        <StyledLink to='/'><Title>Paradise Nursery Shopping</Title></StyledLink>
+        <NavLinks>
+          <StyledLink to="/">Home</StyledLink>
+          <StyledLink to="/cart">
+            <FaShoppingCart size={24} />
+          </StyledLink>
+        </NavLinks>
+      </Navbar>
+      {location.pathname === "/" && (
+        <Jumbotron>
+          <div style={{ width: "50%", textAlign: "left" }}>
+            <JumbotronTitle>Paradise Nursery Shopping</JumbotronTitle>
+            <GetStartedButton onClick={scrollToProducts}>Get Started</GetStartedButton>
+          </div>
+          <JumbotronText>
+            Discover a lush variety of plants, flowers, and gardening essentials
+            at Paradise Nursery Shopping. Whether you're a seasoned gardener or just starting out,
+            we have everything you need to create a beautiful, thriving green space.
+            From indoor houseplants to outdoor landscaping solutions, our collection
+            is carefully curated to bring nature closer to you. Shop with confidence
+            and transform your home or garden into a true paradise today!
+          </JumbotronText>
+        </Jumbotron>
+      )}
+      <MainContent ref={productListRef}>
+        <Suspense fallback={<p className="text-center text-gray-500">Loading...</p>}>
+          <Routes>
+            <Route path="/" element={<ProductList />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
+          </Routes>
+        </Suspense>
+      </MainContent>
+      <Footer>© {new Date().getFullYear()} Paradise Nursery Shopping. All rights reserved.</Footer>
+    </Container>
   );
 }
 
